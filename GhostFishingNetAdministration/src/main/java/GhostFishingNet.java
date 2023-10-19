@@ -1,4 +1,10 @@
 import java.util.Date;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
+@RequestScoped
+@Named
 
 public class GhostFishingNet {
     private Double gfnLocation;
@@ -7,6 +13,7 @@ public class GhostFishingNet {
     private Date gfnReportDate;
     private Date gfnRescueDate;
 
+    @Inject
     public GhostFishingNet(Double gfnLocation, Integer gfnEstimatedSize, Status gfnStatus, Date gfnReportDate, Date gfnRescueDate) {
         this.gfnLocation = gfnLocation;
         this.gfnEstimatedSize = gfnEstimatedSize;

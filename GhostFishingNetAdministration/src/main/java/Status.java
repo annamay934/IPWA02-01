@@ -1,9 +1,17 @@
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
+@RequestScoped
+@Named
+
 public class Status {
     private Boolean gfnStatusReported;
     private Boolean gfnStatusRescuePending;
     private Boolean gfnStatusRescued;
     private Boolean gfnStatusLost;
 
+    @Inject
     public Status(Boolean gfnStatusReported, Boolean gfnStatusRescuePending, Boolean gfnStatusRescued, Boolean gfnStatusLost) {
         this.gfnStatusReported = gfnStatusReported;
         this.gfnStatusRescuePending = gfnStatusRescuePending;
