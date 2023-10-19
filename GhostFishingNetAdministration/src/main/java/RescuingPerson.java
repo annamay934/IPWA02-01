@@ -1,5 +1,5 @@
 public class RescuingPerson extends NaturalPerson {
-    GhostFishingNet gemeldetesNetz;
+    GhostFishingNet rescuedGhostFishingNet;
 
     public RescuingPerson(String firstName, String lastName, String number) {
         super.setFirstName(firstName);
@@ -7,7 +7,7 @@ public class RescuingPerson extends NaturalPerson {
         super.setNumber(number);
     }
 
-    public void melden(GhostFishingNet netz) {
-        this.gemeldetesNetz = netz;
+    public void rescuing(GhostFishingNet rescuedNet) {
+        this.rescuedGhostFishingNet = rescuedNet;
     }
 }
