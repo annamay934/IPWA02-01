@@ -1,11 +1,57 @@
-public class GhostFishingNet {
-    String id;
-    String status;
-    double location;
+import java.util.Date;
 
-    public GhostFishingNet(String id, String status, double location) {
-        this.id = id;
-        this.status = status;
-        this.location = location;
+public class GhostFishingNet {
+    private Double gfnLocation;
+    private Integer gfnEstimatedSize;
+    private Status gfnStatus;
+    private Date gfnReportDate;
+    private Date gfnRescueDate;
+
+    public GhostFishingNet(Double gfnLocation, Integer gfnEstimatedSize, Status gfnStatus, Date gfnReportDate, Date gfnRescueDate) {
+        this.gfnLocation = gfnLocation;
+        this.gfnEstimatedSize = gfnEstimatedSize;
+        this.gfnStatus = gfnStatus;
+        this.gfnReportDate = gfnReportDate;
+        this.gfnRescueDate = gfnRescueDate;
+    }
+
+    public Double getGfnLocation() {
+        return gfnLocation;
+    }
+
+    public void setGfnLocation(Double gfnLocation) {
+        this.gfnLocation = gfnLocation;
+    }
+
+    public Integer getGfnEstimatedSize() {
+        return gfnEstimatedSize;
+    }
+
+    public void setGfnEstimatedSize(Integer gfnEstimatedSize) {
+        this.gfnEstimatedSize = gfnEstimatedSize;
+    }
+
+    public Status getGfnStatus() {
+        return gfnStatus;
+    }
+
+    public void setGfnStatus(Status gfnStatus) {
+        this.gfnStatus = gfnStatus;
+    }
+
+    public Date getGfnReportDate() {
+        return gfnReportDate;
+    }
+
+    public void setGfnReportDate(Date gfnReportDate) {
+        this.gfnReportDate = gfnReportDate;
+    }
+
+    public Date getGfnRescueDate() {
+        return gfnRescueDate;
+    }
+
+    public void setGfnRescueDate(Date gfnRescueDate) {
+        this.gfnRescueDate = gfnRescueDate;
     }
 }

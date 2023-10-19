@@ -1,8 +1,8 @@
 import jakarta.annotation.ManagedBean;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
-@ManagedBean
 @RequestScoped
 @Named
 
@@ -11,7 +11,11 @@ public class NaturalPerson {
     private String lastName;
     private String number;
 
-    public NaturalPerson(){
+@Inject
+    public NaturalPerson(String firstName, String lastName, String number) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.number = number;
     }
 
     public String getFirstName() {
@@ -34,7 +38,7 @@ public class NaturalPerson {
         return number;
     }
 
-    public void setNumber(String telefonnummer) {
-        this.number = telefonnummer;
+    public void setNumber(String number) {
+        this.number = number;
     }
 }
