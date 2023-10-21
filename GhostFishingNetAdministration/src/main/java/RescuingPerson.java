@@ -8,13 +8,13 @@ import jakarta.inject.Named;
 public class RescuingPerson extends NaturalPerson {
     private GhostFishingNet rescuingGfn;
 
-    @Inject
-    public RescuingPerson(String firstName, String lastName, String number) {
-        super(firstName, lastName, number);
-        super.setFirstName(firstName);
-        super.setLastName(lastName);
-        super.setNumber(number);
-    }
+    //  @Inject
+    //  public RescuingPerson(String firstName, String lastName, String number) {
+    //    super(firstName, lastName, number);
+    //    super.setFirstName(firstName);
+    //    super.setLastName(lastName);
+    //    super.setNumber(number);
+    // }
 
     public void rescue(GhostFishingNet rescuedNet) {
         this.rescuingGfn= rescuedNet;

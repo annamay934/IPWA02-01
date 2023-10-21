@@ -11,13 +11,15 @@ public class Status {
     private Boolean gfnStatusRescued;
     private Boolean gfnStatusLost;
 
-    @Inject
+   /* @Inject
     public Status(Boolean gfnStatusReported, Boolean gfnStatusRescuePending, Boolean gfnStatusRescued, Boolean gfnStatusLost) {
         this.gfnStatusReported = gfnStatusReported;
         this.gfnStatusRescuePending = gfnStatusRescuePending;
         this.gfnStatusRescued = gfnStatusRescued;
         this.gfnStatusLost = gfnStatusLost;
     }
+
+    */
 
     public Boolean getGfnStatusReported() {
         return gfnStatusReported;

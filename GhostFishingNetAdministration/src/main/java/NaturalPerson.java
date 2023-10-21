@@ -6,16 +6,16 @@ import jakarta.inject.Named;
 @Named
 
 public class NaturalPerson {
-    private String firstName;
-    private String lastName;
-    private String number;
+    private String firstName ="anna";
+    private String lastName = "may";
+    private String number = "0174-3927152";
 
-@Inject
-    public NaturalPerson(String firstName, String lastName, String number) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.number = number;
-    }
+//@Inject
+   // public NaturalPerson(String firstName, String lastName, String number) {
+    //    this.firstName = firstName;
+    //     this.lastName = lastName;
+    //     this.number = number;
+    // }
 
     public String getFirstName() {
         return firstName;

@@ -13,7 +13,7 @@ public class GhostFishingNet {
     private Date gfnReportDate;
     private Date gfnRescueDate;
 
-    @Inject
+   /* @Inject
     public GhostFishingNet(Double gfnLocation, Integer gfnEstimatedSize, Status gfnStatus, Date gfnReportDate, Date gfnRescueDate) {
         this.gfnLocation = gfnLocation;
         this.gfnEstimatedSize = gfnEstimatedSize;
@@ -21,6 +21,7 @@ public class GhostFishingNet {
         this.gfnReportDate = gfnReportDate;
         this.gfnRescueDate = gfnRescueDate;
     }
+    */
 
     public Double getGfnLocation() {
         return gfnLocation;
