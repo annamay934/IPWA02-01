@@ -1,17 +1,27 @@
+package example.myapp;
+
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @RequestScoped
 @Named
 
+@Entity
 public class NaturalPerson {
-    private String firstName ="anna";
-    private String lastName = "may";
-    private String number = "0174-3927152";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String number;
 
 //@Inject
-   // public NaturalPerson(String firstName, String lastName, String number) {
+   // public com.example.myapp.NaturalPerson(String firstName, String lastName, String number) {
     //    this.firstName = firstName;
     //     this.lastName = lastName;
     //     this.number = number;
@@ -39,5 +49,13 @@ public class NaturalPerson {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

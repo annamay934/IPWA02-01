@@ -1,5 +1,6 @@
+package example.myapp;
+
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @RequestScoped
@@ -9,7 +10,7 @@ public class ReportingPerson extends NaturalPerson {
    private GhostFishingNet reportingGfn;
 
   // @Inject
-    // public ReportingPerson(String firstName, String lastName, String number) {
+    // public com.example.myapp.ReportingPerson(String firstName, String lastName, String number) {
     //   super(firstName, lastName, number);
     //   super.setFirstName(firstName);
     //   super.setLastName(lastName);
