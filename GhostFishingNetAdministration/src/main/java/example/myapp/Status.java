@@ -1,5 +1,6 @@
 package example.myapp;
 
+
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
@@ -12,15 +13,6 @@ public class Status {
     private Boolean gfnStatusRescued;
     private Boolean gfnStatusLost;
 
-   /* @Inject
-    public com.example.myapp.Status(Boolean gfnStatusReported, Boolean gfnStatusRescuePending, Boolean gfnStatusRescued, Boolean gfnStatusLost) {
-        this.gfnStatusReported = gfnStatusReported;
-        this.gfnStatusRescuePending = gfnStatusRescuePending;
-        this.gfnStatusRescued = gfnStatusRescued;
-        this.gfnStatusLost = gfnStatusLost;
-    }
-
-    */
 
     public Boolean getGfnStatusReported() {
         return gfnStatusReported;
