@@ -14,18 +14,10 @@ import javax.persistence.Id;
 public class NaturalPerson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
     private String firstName;
     private String lastName;
-    private String number;
-
-//@Inject
-   // public com.example.myapp.NaturalPerson(String firstName, String lastName, String number) {
-    //    this.firstName = firstName;
-    //     this.lastName = lastName;
-    //     this.number = number;
-    // }
+    private String phoneNumber;
 
     public String getFirstName() {
         return firstName;
@@ -43,13 +35,6 @@ public class NaturalPerson {
         this.lastName = lastName;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
 
     public Long getId() {
         return id;
@@ -57,5 +42,13 @@ public class NaturalPerson {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
