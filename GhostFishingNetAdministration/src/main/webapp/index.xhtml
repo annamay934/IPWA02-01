@@ -20,13 +20,21 @@
         </p:column>
 
         <p:column headerText="Category">
-          <h:outputText value="#{naturalPerson.number}" />
+          <h:outputText value="#{naturalPerson.phoneNumber}" />
         </p:column>
 
         <p:column headerText="Quantity">
           <h:outputText value="2" />
         </p:column>
       </p:dataTable>
+
+      <p:linkButton actionListener="#{ghostFishingNet.rescued()}" value="Rescued" style="margin-right:20px;">
+      <f:param name="RescuedGFN" value="10"/>
+    </p:linkButton>
+
+      <p:linkButton actionListener="#{ghostFishingNet.lost()}" value="Lost" style="margin-right:20px;">
+        <f:param name="LostGFN" value="10"/>
+      </p:linkButton>
     </div>
   </h:form>
 </h:body>
