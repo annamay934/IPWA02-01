@@ -5,11 +5,16 @@
              version="2.2">
     <persistence-unit name="GhostFishingNetProject">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>example.myapp.NaturalPerson</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
             <property name="javax.persistence.jdbc.user" value="anna"/>
             <property name="javax.persistence.jdbc.password" value="12345"/>
+
+            <!-- Hibernate-spezifische Einstellungen -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
-        <class>example.myapp.NaturalPerson</class>
     </persistence-unit>
 </persistence>
