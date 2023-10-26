@@ -14,7 +14,7 @@ public class Main {
 
         NaturalPerson p = new NaturalPerson();
         p.setFirstName("Anna");
-        p.setNumber("01742536217");
+        p.setPhoneNumber("01742536217");
         p.setLastName("May");
 
         em.getTransaction().begin();
