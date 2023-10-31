@@ -5,7 +5,9 @@
              version="2.2">
     <persistence-unit name="GhostFishingNetProject">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>example.myapp.NaturalPerson</class>
+        <class>example.myapp.model.NaturalPerson</class>
+        <class>example.myapp.model.GhostFishingNet</class>
+        <class>example.myapp.model.Status</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
             <property name="javax.persistence.jdbc.user" value="anna"/>
@@ -16,5 +18,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
+
+
     </persistence-unit>
 </persistence>
