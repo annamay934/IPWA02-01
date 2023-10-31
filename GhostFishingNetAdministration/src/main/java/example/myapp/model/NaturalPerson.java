@@ -1,22 +1,27 @@
-package example.myapp;
+package example.myapp.model;
 
+import example.myapp.listener.NaturalPersonListener;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @RequestScoped
 @Named
-
 @Entity
+@EntityListeners(NaturalPersonListener.class)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
 public class NaturalPerson {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
+
     private String firstName;
+
     private String lastName;
+
     private String phoneNumber;
 
     public String getFirstName() {
