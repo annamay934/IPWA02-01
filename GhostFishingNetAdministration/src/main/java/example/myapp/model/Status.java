@@ -1,18 +1,27 @@
-package example.myapp;
+package example.myapp.model;
 
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
+import javax.persistence.*;
+import java.util.Set;
+
 @RequestScoped
 @Named
-
+@Entity
 public class Status {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Boolean gfnStatusReported;
     private Boolean gfnStatusRescuePending;
     private Boolean gfnStatusRescued;
     private Boolean gfnStatusLost;
 
+    @ManyToMany(mappedBy = "status")
+    private Set<GhostFishingNet> GhostFishingNet;
 
     public Boolean getGfnStatusReported() {
         return gfnStatusReported;
