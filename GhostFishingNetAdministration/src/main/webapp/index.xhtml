@@ -4,39 +4,62 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-  <title>Facelet Title</title>
+  <title>Ghost Net Fishing</title>
+  <link rel="stylesheet" type="text/css" href="style/styles.css" />
 </h:head>
 <h:body>
 
   <h:form>
-    <div class="card">
-      <p:dataTable var="naturalPerson" value="">
-        <p:column headerText="Vorname">
-          <h:outputText value="#{naturalPerson.firstName}" />
-        </p:column>
+      <h:panelGrid columns="10">
+      <div>
+        <p:dataTable var="reportedNet" value="#{reportingPerson.reportingGfnList}" lazy="false">
 
-        <p:column headerText="Nachname">
-          <h:outputText value="#{naturalPerson.lastName}" />
-        </p:column>
+            <p:column headerText="ID">
+                <h:outputText value="#{reportedNet.id}" />
+            </p:column>
+            <p:column headerText="Estimated Size">
+                <h:outputText value="#{reportedNet.gfnEstimatedSize}" />
+            </p:column>
 
-        <p:column headerText="Category">
-          <h:outputText value="#{naturalPerson.phoneNumber}" />
-        </p:column>
+            <p:column headerText="Location Latitude">
+                <h:outputText value="#{reportedNet.gfnLocationLatitude}" />
+            </p:column>
 
-        <p:column headerText="Quantity">
-          <h:outputText value="2" />
-        </p:column>
-      </p:dataTable>
+            <p:column headerText="Location Longitude">
+                <h:outputText value="#{reportedNet.gfnLocationLongitude}" />
+            </p:column>
 
-      <p:linkButton actionListener="#{ghostFishingNet.rescued()}" value="Rescued" style="margin-right:20px;">
-      <f:param name="RescuedGFN" value="10"/>
-    </p:linkButton>
+            <p:column headerText="Report Date">
+                <h:outputText value="#{reportedNet.gfnReportDate}" />
+            </p:column>
 
-      <p:linkButton actionListener="#{ghostFishingNet.lost()}" value="Lost" style="margin-right:20px;">
-        <f:param name="LostGFN" value="10"/>
-      </p:linkButton>
-    </div>
+            <p:column headerText="Rescue Date">
+                <h:outputText value="#{reportedNet.gfnRescueDate}" />
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{reportedNet.gfnStatus}" />
+            </p:column>
+        </p:dataTable>
+      </div>
+      </h:panelGrid>
+
+      <h:panelGrid columns="4">
+          <h:commandButton actionListener="#{ghostFishingNet.rescued()}" value="Report A Ghost Fishing Net As Successfully Rescued" styleClass="custom-button">
+          </h:commandButton>
+
+          <h:commandButton actionListener="#{ghostFishingNet.lost()}" value="Report A Ghost Fishing Net As Lost" styleClass="custom-button">
+          </h:commandButton>
+
+          <h:commandButton action="#{navigationBean.goToPageReportNewGhostFishingNet()}" value="Report A New Ghost Fishing Net" styleClass="custom-button">
+          </h:commandButton>
+
+          <h:commandButton action="#{navigationBean.goToPageRegisterYourselfAsRescuingPerson()}" value="Register Yourself As Rescuing Person" styleClass="custom-button">
+          </h:commandButton>
+      </h:panelGrid>
+
   </h:form>
+
 </h:body>
 </html>
 
