@@ -14,4 +14,11 @@ public class NavigationBean {
     public String goToPageRegisterYourselfAsRescuingPerson() {
         return "RegisterYourselfAsRescuingPerson.xhtml";
     }
+
+    public String goToPageReportAGhostFishingNetAsLost() {
+        return "ReportAGhostFishingNetAsLost.xhtml";
+    }
+    public String goToPageReportAGhostFishingNetAsRescued() {
+        return "ReportAGhostFishingNetAsRescued.xhtml";
+    }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view>
+    <div class="card">
+
+    <h5>First Name</h5>
+    <div class="field">
+        <p:outputLabel for="firstNameInput" styleClass="block" value="#{naturalPerson.firstName}" />
+        <p:inputText id="firstNameInput" styleClass="block" placeholder="Enter your firstname."/>
+    </div>
+
+        <h5>Last Name</h5>
+        <div class="field">
+            <p:outputLabel for="lastNameInput" styleClass="block" value="#{naturalPerson.lastName}" />
+            <p:inputText id="lastNameInput" styleClass="block" placeholder="Enter your lastname."/>
+        </div>
+
+        <h5>Phone Number</h5>
+        <div class="field">
+            <p:outputLabel for="phoneNumberInput" styleClass="block" value="#{naturalPerson.phoneNumber}" />
+            <p:inputText id="phoneNumberInput" styleClass="block" placeholder="Enter your phonenumber."/>
+        </div>
+
+        <h5>New Resgistration</h5>
+        <h5>Username</h5>
+        <div class="field">
+            <!-- Label und Eingabefeld für den Benutzernamen -->
+            <p:outputLabel for="usernameInput" styleClass="block" value="#{rescuingPerson.userName}"/>
+            <p:inputText id="usernameInput" styleClass="block" placeholder="Enter your username."/>
+            <!-- Kleiner Hinweistext unter dem Eingabefeld -->
+            <small class="block">You should use letters and numbers in combination.</small>
+        </div>
+
+        <h5>Password</h5>
+        <div class="field">
+            <!-- Label und Eingabefeld für das Passwort mit einer Fehlerklasse -->
+            <p:outputLabel for="passwordInput" styleClass="block" value="#{rescuingPerson.password}"/>
+            <p:inputText id="passwordInput" styleClass="block" placeholder="Enter your password."/>
+            <!-- Kleiner Hinweistext für einen Fehlerzustand -->
+            <small class="block ui-state-error">You should use letters and numbers in combination.</small>
+        </div>
+    </div>
+</f:view>
+</html>

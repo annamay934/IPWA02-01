@@ -153,7 +153,7 @@ public class GhostFishingNetBean {
     }
 
     public void saveGhostFishingNetAsLost(GhostFishingNet gfn) {
-        System.out.println("Save RescuingPerson method called!");
+        System.out.println("saveGhostFishingNetAsLost method called!");
         loadSelectedGfn();
         GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
 
@@ -166,7 +166,38 @@ public class GhostFishingNetBean {
             System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
 
             Status status = currentGfn.getStatus();
-            status.setGfnStatusRescuePending(true);
+            status.setGfnStatusLost(true);
+            statusService.merge(status);
+
+            System.out.println("Status 1" + status.getGfnStatusRescuePending());
+            System.out.println("Status 1" + status.getGfnStatusRescued());
+            System.out.println("Status 1" + status.getGfnStatusLost());
+            System.out.println("Status 1" + status.getGfnStatusReported());
+            System.out.println("Status 1" + status.getGfnStatusRescued());
+
+            ghostFishingNetService.merge(currentGfn);
+            System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
+
+        } else {
+            System.out.println("GhostFishingNet or selectedRescuingPersonId is null.");
+        }
+    }
+
+    public void saveGhostFishingNetAsRescued(GhostFishingNet gfn) {
+        System.out.println("saveGhostFishingNetAsRescued method called!");
+        loadSelectedGfn();
+        GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
+
+        System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
+
+        if (currentGfn != null) {
+            // Protokolliere die eingegebenen Daten
+            System.out.println("Selected Rescuing Person Details:");
+            System.out.println("ID: " + currentGfn.getId());
+            System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
+
+            Status status = currentGfn.getStatus();
+            status.setGfnStatusRescued(true);
             statusService.merge(status);
 
             System.out.println("Status 1" + status.getGfnStatusRescuePending());
