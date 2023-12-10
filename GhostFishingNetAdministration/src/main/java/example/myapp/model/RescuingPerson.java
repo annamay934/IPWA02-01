@@ -3,17 +3,16 @@ package example.myapp.model;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @RequestScoped
 @Named
 
 @Entity
-@DiscriminatorValue("RES") // Set the discriminator value for RescuingPerson
+@DiscriminatorValue("RES")
 public class RescuingPerson extends NaturalPerson {
-    @OneToOne
+
+    @OneToOne(mappedBy = "rescuingPerson", cascade = CascadeType.MERGE)
     private GhostFishingNet rescuingGfn;
     private String userName;
     private String password;

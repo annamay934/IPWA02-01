@@ -1,23 +1,21 @@
 package example.myapp.model;
 
 import jakarta.enterprise.context.RequestScoped;
-
+import example.myapp.beans.ReportingPersonBean;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
-import javax.persistence.*;
-import java.text.SimpleDateFormat;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.Set;
-
 
 @RequestScoped
 @Named
 
 @Entity
 public class GhostFishingNet {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double gfnLocationLatitude;
     private Double gfnLocationLongitude;
@@ -25,17 +23,22 @@ public class GhostFishingNet {
     private Integer gfnEstimatedSizeLength;
     private Integer gfnEstimatedSizeWidth;
 
-    private String gfnReportDate;
-    private String gfnRescueDate;
+    @Temporal(TemporalType.DATE)
+    private Date gfnReportDate;
+    @Temporal(TemporalType.DATE)
+    private Date gfnRescueDate;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<Status> status;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "STATUS_ID")
+    private Status status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RESCUINGPERSON_ID")
     private RescuingPerson rescuingPerson;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ReportingPerson reportingPerson;
+
 
     public void calculatedGfnEstimatedSize(Integer gfnEstimatedSizeLength, Integer gfnEstimatedSizeWidth){
         if (gfnEstimatedSizeLength != null && gfnEstimatedSizeWidth != null) {
@@ -52,22 +55,20 @@ public class GhostFishingNet {
     }
 
 
-    public String getGfnReportDate() {
+    public Date getGfnReportDate() {
         return gfnReportDate;
     }
 
-    public void setGfnReportDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
-        this.gfnReportDate  = dateFormat.format(new Date());
+    public void setGfnReportDate(Date gfnReportDate) {
+        this.gfnReportDate = gfnReportDate;
     }
 
-    public String getGfnRescueDate() {
+    public Date getGfnRescueDate() {
         return gfnRescueDate;
     }
 
-    public void setGfnRescueDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
-        this.gfnRescueDate  = dateFormat.format(new Date());
+    public void setGfnRescueDate(Date gfnRescueDate) {
+        this.gfnRescueDate = gfnRescueDate;
     }
 
     public Long getId() {
@@ -76,64 +77,6 @@ public class GhostFishingNet {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void rescued() {
-        // Get the Ghost Fishing Net entity from the database
-        EntityManager em = Persistence.createEntityManagerFactory("GhostFishingNetProject").createEntityManager();
-        GhostFishingNet gfn = em.find(GhostFishingNet.class, this.getId());
-
-        // Update the status of the Ghost Fishing Net
-        Set<Status> status = gfn.getStatus();
-
-        // Set the status of the Ghost Fishing Net
-
-
-        // Set the rescue date to the current date in "MM.dd.yyyy" format
-        gfn.setGfnRescueDate();
-
-        // Commit the transaction
-        em.getTransaction().begin();
-        em.merge(gfn);
-        em.getTransaction().commit();
-
-        // Close the EntityManager
-        em.close();
-    }
-
-
-    public void lost() {
-        // Get the Ghost Fishing Net entity from the database
-        EntityManager em = Persistence.createEntityManagerFactory("GhostFishingNetProject").createEntityManager();
-        GhostFishingNet gfn = em.find(GhostFishingNet.class, this.getId());
-
-        // Update the status of the Ghost Fishing Net
-        Set<Status> status = gfn.getStatus();
-
-        // Set the status of the Ghost Fishing Net
-
-
-        // Commit the transaction
-        em.getTransaction().begin();
-        em.merge(gfn);
-        em.getTransaction().commit();
-
-        // Close the EntityManager
-        em.close();
-    }
-
-    public void newGhostFishingNet() {
-        // Get the Ghost Fishing Net entity from the database
-        EntityManager em = Persistence.createEntityManagerFactory("GhostFishingNetProject").createEntityManager();
-        GhostFishingNet gfn = em.find(GhostFishingNet.class, this.getId());
-
-        // Commit the transaction
-        em.getTransaction().begin();
-        em.merge(gfn);
-        em.getTransaction().commit();
-
-        // Close the EntityManager
-        em.close();
     }
 
     public Double getGfnLocationLatitude() {
@@ -176,6 +119,13 @@ public class GhostFishingNet {
         return reportingPerson;
     }
 
+    public void addReportingPerson(ReportingPerson reportingPerson) {
+        if (reportingPerson != null) {
+            this.reportingPerson = reportingPerson;
+            reportingPerson.addGhostFishingNet(this);
+        }
+    }
+
     public void setRescuingPerson(RescuingPerson rescuingPerson) {
         this.rescuingPerson = rescuingPerson;
     }
@@ -184,16 +134,13 @@ public class GhostFishingNet {
         return rescuingPerson;
     }
 
-    public Set<Status> getStatus() {
+
+    public Status getStatus() {
         return status;
     }
 
-    public void clearStatus(){
-        status.clear();
-    }
-
-    public void addStatus(Status status){
-        this.status.add(status);
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
 

@@ -1,10 +1,13 @@
 package example.myapp.model;
 
+import example.myapp.beans.ReportingPersonBean;
 import example.myapp.listener.NaturalPersonListener;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @RequestScoped
 @Named
@@ -12,9 +15,10 @@ import javax.persistence.*;
 @EntityListeners(NaturalPersonListener.class)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
+
 public class NaturalPerson {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 

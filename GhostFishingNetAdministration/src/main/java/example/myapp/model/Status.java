@@ -4,12 +4,13 @@ package example.myapp.model;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @RequestScoped
 @Named
 @Entity
+
 public class Status {
 
     @Id
@@ -20,8 +21,8 @@ public class Status {
     private Boolean gfnStatusRescued;
     private Boolean gfnStatusLost;
 
-    @ManyToMany(mappedBy = "status")
-    private Set<GhostFishingNet> GhostFishingNet;
+    @OneToOne (fetch = FetchType.EAGER, mappedBy = "status", cascade = CascadeType.PERSIST)
+    private GhostFishingNet ghostFishingNet;
 
     public Boolean getGfnStatusReported() {
         return gfnStatusReported;
@@ -53,5 +54,22 @@ public class Status {
 
     public void setGfnStatusLost(Boolean gfnStatusLost) {
         this.gfnStatusLost = gfnStatusLost;
+    }
+
+    /** public Set<GhostFishingNet> getGhostFishingNets() {
+        return GhostFishingNet;
+    }
+
+    public void setGhostFishingNets(Set<GhostFishingNet> ghostFishingNets) {
+        this.GhostFishingNet = ghostFishingNets;
+    }
+     **/
+
+    public GhostFishingNet getGhostFishingNet() {
+        return ghostFishingNet;
+    }
+
+    public void setGhostFishingNet(GhostFishingNet ghostFishingNet) {
+        this.ghostFishingNet = ghostFishingNet;
     }
 }
