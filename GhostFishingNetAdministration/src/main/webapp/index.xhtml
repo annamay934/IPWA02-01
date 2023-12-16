@@ -2,159 +2,89 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
     <title>Ghost Net Fishing</title>
     <link rel="stylesheet" type="text/css" href="style/styles.css" />
 </h:head>
 <h:body>
-
-    <h:form>
-        <h:panelGrid columns="10">
-            <div>
-                <p:dataTable var="gfn" value="#{ghostFishingNetBean.getAllGhostFishingNets()}" lazy="false">
-
-                    <p:column headerText="GFN id">
-                        <h:outputText value="#{gfn.getId()}" />
-                    </p:column>
-
-                    <p:column headerText="REP First Name">
-                        <h:outputText value="#{gfn.getReportingPerson().getFirstName()}" />
-                    </p:column>
-
-                    <p:column headerText="REP Last Name">
-                        <h:outputText value="#{gfn.getReportingPerson().getLastName()}" />
-                    </p:column>
-
-                    <p:column headerText="Status Reported">
-                        <h:outputText value="#{gfn.getStatus().getGfnStatusReported()}" />
-                    </p:column>
-
-                    <p:column headerText="Status RescuePending">
-                        <h:outputText value="#{gfn.getStatus().getGfnStatusRescuePending()}" />
-                    </p:column>
-
-                    <p:column headerText="Status Rescued">
-                        <h:outputText value="#{gfn.getStatus().getGfnStatusRescued()}" />
-                    </p:column>
-
-                    <p:column headerText="Status Lost">
-                        <h:outputText value="#{gfn.getStatus().getGfnStatusLost()}" />
-                    </p:column>
-
-                    <p:column headerText="GfnLocationLatitude">
-                    <h:outputText value="#{gfn.getGfnLocationLatitude()}" />
-                    </p:column>
-
-                    <p:column headerText="GfnLocationLongitude">
-                        <h:outputText value="#{gfn.getGfnLocationLongitude()}" />
-                    </p:column>
-
-                    <p:column headerText="getGfnEstimatedSize">
-                        <h:outputText value="#{gfn.getGfnEstimatedSize()}" />
-                    </p:column>
-
-                    <p:column headerText="gfn.getGfnReportDate">
-                        <h:outputText value="#{gfn.getGfnReportDate()}" />
-                    </p:column>
-
-                    <p:column headerText="gfn.getGfnRescueDate">
-                        <h:outputText value="#{gfn.getGfnRescueDate()}" />
-                    </p:column>
-                </p:dataTable>
-            </div>
-        </h:panelGrid>
-
-        <h:panelGrid columns="4">
-            <h:commandButton action="#{navigationBean.goToPageReportNewGhostFishingNet()}" value="Report A New Ghost Fishing Net" styleClass="custom-button">
-
-            </h:commandButton>
-        </h:panelGrid>
-
-        <h:panelGrid columns="2">
-            <div class="card">
-                <h3>Report A New Ghost Fishing Net</h3>
-                <h4>Input Your Data</h4>
-
-                <h4>Location</h4>
-                <h5>Latitude</h5>
-                <p:inputText value="#{ghostFishingNet.gfnLocationLatitude}" />
-
-                <h5>Longitude</h5>
-                <p:inputText value="#{ghostFishingNet.gfnLocationLongitude}" />
-
-                <h4>Estimated Size</h4>
-                <h5>Estimated Length</h5>
-                <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeLength}" />
-
-                <h5>Estimated Width</h5>
-                <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeWidth}" />
-
-                <h5>Report Date</h5>
-                <p:calendar value="#{ghostFishingNet.gfnReportDate}" />
-
-                <h5>Rescue Date</h5>
-                <p:calendar value="#{ghostFishingNet.gfnRescueDate}" />
-
-                <h5>Reporting Person</h5>
-                <p:selectOneMenu id="reportingPerson" value="#{ghostFishingNetBean.selectedReportingPersonId}">
-                    <f:selectItem itemLabel="Stay Anonymous" itemValue="#{null}" />
-                    <f:selectItems value="#{reportingPersonBean.getReportingPersons()}" var="rep"
-                                   itemLabel="#{rep.firstName} #{rep.lastName}" itemValue="#{rep.id}" />
-                    <p:ajax listener="#{ghostFishingNetBean.loadSelectedReportingPerson}" />
-                </p:selectOneMenu>
-                <h:outputLabel for="reportingPerson" value="" />
-                <p:commandButton action="#{ghostFishingNetBean.saveGhostFishingNet(ghostFishingNet)}" value="Submit" />
-            </div>
-        </h:panelGrid>
-    </h:form>
+    <ui:include src="ShowDataFromTableGhostFishingNets.xhtml" />
 
     <h:form>
         <h:panelGrid columns="4">
             <h:commandButton action="#{navigationBean.goToPageRegisterYourselfAsRescuingPerson()}" value="Register Yourself As Rescuing Person" styleClass="custom-button"/>
-
-        </h:panelGrid>
-
-        <h:panelGrid columns="2">
-            <div class="card">
-                <h3>Register Yourself As Rescuing Person</h3>
-                <h4>Input Your Data</h4>
-                <h5>First Name</h5>
-                <p:inputText value="#{rescuingPerson.firstName}" />
-
-                <h5>Last Name</h5>
-                <p:inputText value="#{rescuingPerson.lastName}" />
-
-                <h5>Phone Number</h5>
-                <p:inputText value="#{rescuingPerson.phoneNumber}" />
-
-                <h5>User Name</h5>
-                <p:inputText value="#{rescuingPerson.userName}" />
-
-                <h5>Password</h5>
-                <p:inputText value="#{rescuingPerson.password}" />
-
-                <h5>Ghost Fishing Net</h5>
-                <p:selectOneMenu id="gfn" value="#{ghostFishingNetBean.selectedGfnId}">
-                    <f:selectItem itemLabel="Select Ghost Fishing Net" itemValue="#{null}" />
-                    <f:selectItems value="#{ghostFishingNetBean.getAllGhostFishingNets()}" var="gfn"
-                                   itemLabel="#{gfn.id} " itemValue="#{gfn.id}" />
-                    <p:ajax listener="#{ghostFishingNetBean.loadSelectedGfn}" />
-                </p:selectOneMenu>
-                <h:outputLabel for="gfn" value="" />
-                <p:commandButton action="#{rescuingPersonBean.saveRescuingPerson(rescuingPerson)}" value="Submit" />
-            </div>
         </h:panelGrid>
     </h:form>
 
+    <p:separator />
+
     <h:form>
-        <h:panelGrid columns="4">
-        <h:commandButton action="#{navigationBean.goToPageReportAGhostFishingNetAsLost()}" value="Report A Ghost Fishing Net As Lost" styleClass="custom-button"/>
+        <h3>Or Log Yourself In</h3>
+        <div class="card">
+            <h:panelGrid id="grid" columns="3" >
+                <p:outputLabel for="username" value="Username: "/>
+                <p:inputText id="username" value="#{rescuingPersonBean.userName}" required="true"/>
+                <p:messages id="usernameMessage" for="username"/>
+                <p:ajax event="keyup" listener="#{rescuingPersonBean.checkUsernameAvailability}" update="usernameMessage"/>
+            </h:panelGrid>
+        </div>
 
+        <div class="card">
+        <h:panelGrid id="grid1" columns="3" >
+            <p:outputLabel for="password" value="Password: "/>
+            <h:inputSecret id="password" value="#{rescuingPersonBean.password}" required="true"/>
+            <p:messages id="passwordMessage" for="password"/>
+            <p:ajax event="keyup" listener="#{rescuingPersonBean.checkPassword}" update="passwordMessage"/>
         </h:panelGrid>
+        </div>
+        <h:commandButton value="Log In" action="#{rescuingPersonBean.login()}" styleClass="custom-button"/>
+    </h:form>
 
-        <h:panelGrid columns="2">
-            <div class="card">
+    <p:separator />
+
+    <h:form>
+    <h:panelGrid columns="2">
+        <div class="card">
+            <h3>Report A New Ghost Fishing Net</h3>
+            <h4>Input Your Data</h4>
+
+            <h4>Location</h4>
+            <h5>Latitude</h5>
+            <p:inputText value="#{ghostFishingNet.gfnLocationLatitude}" />
+
+            <h5>Longitude</h5>
+            <p:inputText value="#{ghostFishingNet.gfnLocationLongitude}" />
+
+            <h4>Estimated Size</h4>
+            <h5>Estimated Length</h5>
+            <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeLength}" />
+
+            <h5>Estimated Width</h5>
+            <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeWidth}" />
+
+            <h5>Report Date</h5>
+            <p:calendar value="#{ghostFishingNet.gfnReportDate}" />
+
+            <h5>Rescue Date</h5>
+            <p:calendar value="#{ghostFishingNet.gfnRescueDate}" />
+
+            <h5>Reporting Person</h5>
+            <p:selectOneMenu id="reportingPerson" value="#{ghostFishingNetBean.selectedReportingPersonId}">
+                <f:selectItem itemLabel="Stay Anonymous" itemValue="#{null}" />
+                <f:selectItems value="#{reportingPersonBean.getReportingPersons()}" var="rep"
+                               itemLabel="#{rep.firstName} #{rep.lastName}" itemValue="#{rep.id}" />
+                <p:ajax listener="#{ghostFishingNetBean.loadSelectedReportingPerson}" />
+            </p:selectOneMenu>
+            <h:outputLabel for="reportingPerson" value="reportingPerson" />
+            <h:commandButton action="#{ghostFishingNetBean.saveGhostFishingNet(ghostFishingNet)}" value="Submit" styleClass="custom-button" />
+        </div>
+    </h:panelGrid>
+    </h:form>
+
+    <h:form>
+    <h:panelGrid columns="2">
+        <div class="card">
             <h3>Choose Ghost Fishing Net You Want To Report Lost</h3>
             <h5>Ghost Fishing Net</h5>
             <p:selectOneMenu id="gfn1" value="#{ghostFishingNetBean.selectedGfnId}">
@@ -163,32 +93,10 @@
                                itemLabel="#{gfn.id} " itemValue="#{gfn.id}" />
                 <p:ajax listener="#{ghostFishingNetBean.loadSelectedGfn}" />
             </p:selectOneMenu>
-            <h:outputLabel for="gfn" value="" />
-            <h:commandButton action="#{ghostFishingNetBean.saveGhostFishingNetAsLost(ghostFishingNet)}" value="submit" styleClass="custom-button"/>
-            </div>
-        </h:panelGrid>
-    </h:form>
-
-    <h:form>
-        <h:panelGrid columns="4">
-            <h:commandButton action="#{navigationBean.goToPageReportAGhostFishingNetAsRescued()}" value="Report A Ghost Fishing Net As Successfully Rescued" styleClass="custom-button">
-            </h:commandButton>
-        </h:panelGrid>
-
-            <h:panelGrid columns="2">
-                <div class="card">
-                <h3>Choose Ghost Fishing Net You Want To Report Successfully Rescued</h3>
-                <h5>Ghost Fishing Net</h5>
-                <p:selectOneMenu id="gfn2" value="#{ghostFishingNetBean.selectedGfnId}">
-                    <f:selectItem itemLabel="Select Ghost Fishing Net" itemValue="#{null}" />
-                    <f:selectItems value="#{ghostFishingNetBean.getAllGhostFishingNets()}" var="gfn"
-                                   itemLabel="#{gfn.id} " itemValue="#{gfn.id}" />
-                    <p:ajax listener="#{ghostFishingNetBean.loadSelectedGfn}" />
-                </p:selectOneMenu>
-                <h:outputLabel for="gfn" value="" />
-                <h:commandButton action="#{ghostFishingNetBean.saveGhostFishingNetAsRescued(ghostFishingNet)}" value="submit" styleClass="custom-button"/>
-                </div>
-            </h:panelGrid>
+            <h:outputLabel for="gfn1" value="" />
+            <h:commandButton action="#{ghostFishingNetBean.saveGhostFishingNetAsLost}" value="Submit" styleClass="custom-button"/>
+        </div>
+    </h:panelGrid>
     </h:form>
 </h:body>
 </html>

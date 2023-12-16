@@ -3,6 +3,8 @@ package example.myapp.beans;
 import ejb.ReportingPersonService;
 import example.myapp.model.ReportingPerson;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -11,6 +13,8 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
 import jakarta.transaction.Transactional;
+
+import java.io.Serializable;
 import java.util.List;
 
 @Named
@@ -18,6 +22,7 @@ import java.util.List;
 
 
 public class ReportingPersonBean {
+
     @PersistenceContext
     private EntityManager em;
 

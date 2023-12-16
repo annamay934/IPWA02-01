@@ -1,9 +1,14 @@
 package example.myapp.model;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @RequestScoped
 @Named
@@ -44,4 +49,13 @@ public class RescuingPerson extends NaturalPerson {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public boolean checkPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
+    }
+
 }

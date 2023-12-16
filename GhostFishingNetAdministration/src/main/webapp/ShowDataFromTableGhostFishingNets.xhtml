@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Datatable GhostFishingNets</title>
+    <link rel="stylesheet" type="text/css" href="style/styles.css" />
+</h:head>
+<h:body>
+
+    <h:form>
+        <h:panelGrid columns="10">
+            <div>
+                <p:dataTable var="gfn" value="#{ghostFishingNetBean.getAllGhostFishingNets()}" lazy="false">
+
+                    <p:column headerText="GFN id">
+                        <h:outputText value="#{gfn.getId()}" />
+                    </p:column>
+
+                    <p:column headerText="REP First Name">
+                        <h:outputText value="#{gfn.getReportingPerson().getFirstName()}" />
+                    </p:column>
+
+                    <p:column headerText="REP Last Name">
+                        <h:outputText value="#{gfn.getReportingPerson().getLastName()}" />
+                    </p:column>
+
+                    <p:column headerText="Status Reported">
+                        <h:outputText value="#{gfn.getStatus().getGfnStatusReported()}" />
+                    </p:column>
+
+                    <p:column headerText="Status RescuePending">
+                        <h:outputText value="#{gfn.getStatus().getGfnStatusRescuePending()}" />
+                    </p:column>
+
+                    <p:column headerText="Status Rescued">
+                        <h:outputText value="#{gfn.getStatus().getGfnStatusRescued()}" />
+                    </p:column>
+
+                    <p:column headerText="Status Lost">
+                        <h:outputText value="#{gfn.getStatus().getGfnStatusLost()}" />
+                    </p:column>
+
+                    <p:column headerText="GfnLocationLatitude">
+                    <h:outputText value="#{gfn.getGfnLocationLatitude()}" />
+                    </p:column>
+
+                    <p:column headerText="GfnLocationLongitude">
+                        <h:outputText value="#{gfn.getGfnLocationLongitude()}" />
+                    </p:column>
+
+                    <p:column headerText="getGfnEstimatedSize">
+                        <h:outputText value="#{gfn.getGfnEstimatedSize()}" />
+                    </p:column>
+
+                    <p:column headerText="gfn.getGfnReportDate">
+                        <h:outputText value="#{gfn.getGfnReportDate()}" />
+                    </p:column>
+
+                    <p:column headerText="gfn.getGfnRescueDate">
+                        <h:outputText value="#{gfn.getGfnRescueDate()}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
+

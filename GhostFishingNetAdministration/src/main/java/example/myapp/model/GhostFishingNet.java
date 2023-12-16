@@ -1,11 +1,16 @@
 package example.myapp.model;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import example.myapp.beans.ReportingPersonBean;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,6 +19,7 @@ import java.util.Set;
 
 @Entity
 public class GhostFishingNet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

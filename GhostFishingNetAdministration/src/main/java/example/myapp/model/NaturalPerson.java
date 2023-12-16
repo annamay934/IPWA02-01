@@ -3,10 +3,13 @@ package example.myapp.model;
 import example.myapp.beans.ReportingPersonBean;
 import example.myapp.listener.NaturalPersonListener;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @RequestScoped
@@ -16,7 +19,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
 
-public class NaturalPerson {
+public class NaturalPerson{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

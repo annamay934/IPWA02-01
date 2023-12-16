@@ -1,46 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-            xmlns:h="http://xmlns.jcp.org/jsf/html"
-            xmlns:p="http://primefaces.org/ui"
-            xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<f:view>
-    <div class="card">
+<h:head>
+    <title>Report A New GhostFishingNet</title>
+    <link rel="stylesheet" type="text/css" href="style/styles.css" />
+</h:head>
 
-    <h3>Input Your Data</h3>
+<h:body>
+    <ui:include src="ShowDataFromTableGhostFishingNets.xhtml" />
 
-    <h4>Location</h4>
-    <h5>Latitude</h5>
-    <p:inputText value="#{ghostFishingNet.gfnLocationLatitude}" />
+    <h:form>
+        <h:panelGrid columns="4">
+            <h:commandButton action="#{navigationBean.goToPageReportNewGhostFishingNet()}" value="Report A New Ghost Fishing Net" styleClass="custom-button">
+            </h:commandButton>
+        </h:panelGrid>
+    </h:form>
 
-    <h5>Longitude</h5>
-    <p:inputText value="#{ghostFishingNet.gfnLocationLongitude}" />
+    <h:form>
+        <h:panelGrid columns="2">
+            <div class="card">
+                <h3>Report A New Ghost Fishing Net</h3>
+                <h4>Input Your Data</h4>
 
-    <h4>Estimated Size</h4>
-    <h5>Estimated Length</h5>
-    <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeLength}" />
+                <h4>Location</h4>
+                <h5>Latitude</h5>
+                <p:inputText value="#{ghostFishingNet.gfnLocationLatitude}" />
 
-    <h5>Estimated Width</h5>
-    <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeWidth}" />
+                <h5>Longitude</h5>
+                <p:inputText value="#{ghostFishingNet.gfnLocationLongitude}" />
 
-    <h5>Report Date</h5>
-    <p:calendar value="#{ghostFishingNet.gfnReportDate}" />
+                <h4>Estimated Size</h4>
+                <h5>Estimated Length</h5>
+                <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeLength}" />
 
-    <h5>Rescue Date</h5>
-    <p:calendar value="#{ghostFishingNet.gfnRescueDate}" />
+                <h5>Estimated Width</h5>
+                <p:inputText value="#{ghostFishingNet.gfnEstimatedSizeWidth}" />
 
-    <p:commandButton action="#{ghostFishingNetBean.saveGhostFishingNet(ghostFishingNet)}" value="Submit" />
-    </div>
+                <h5>Report Date</h5>
+                <p:calendar value="#{ghostFishingNet.gfnReportDate}" />
 
-    <h4>GhostFishingNet Information:</h4>
-    <h:outputText value="Latitude: #{ghostFishingNet.gfnLocationLatitude}" /><br/>
-    <h:outputText value="Longitude: #{ghostFishingNet.gfnLocationLongitude}" /><br/>
-    <h:outputText value="Estimated Length: #{ghostFishingNet.gfnEstimatedSizeLength}" /><br/>
-    <h:outputText value="Estimated Width: #{ghostFishingNet.gfnEstimatedSizeWidth}" /><br/>
-    <h:outputText value="Report Date: #{ghostFishingNet.gfnReportDate}" /><br/>
-    <h:outputText value="Rescue Date: #{ghostFishingNet.gfnRescueDate}" /><br/>
+                <h5>Rescue Date</h5>
+                <p:calendar value="#{ghostFishingNet.gfnRescueDate}" />
 
-</f:view>
+                <h5>Reporting Person</h5>
+                <p:selectOneMenu id="reportingPerson" value="#{ghostFishingNetBean.selectedReportingPersonId}">
+                    <f:selectItem itemLabel="Stay Anonymous" itemValue="#{null}" />
+                    <f:selectItems value="#{reportingPersonBean.getReportingPersons()}" var="rep"
+                                   itemLabel="#{rep.firstName} #{rep.lastName}" itemValue="#{rep.id}" />
+                    <p:ajax listener="#{ghostFishingNetBean.loadSelectedReportingPerson}" />
+                </p:selectOneMenu>
+                <h:outputLabel for="reportingPerson" value="reportingPerson" />
+                <p:commandButton action="#{ghostFishingNetBean.saveGhostFishingNet(ghostFishingNet)}" value="Submit" />
+            </div>
+        </h:panelGrid>
+    </h:form>
+
+</h:body>
 </html>

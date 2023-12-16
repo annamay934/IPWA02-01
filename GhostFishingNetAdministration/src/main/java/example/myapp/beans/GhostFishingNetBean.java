@@ -8,7 +8,10 @@ import example.myapp.model.ReportingPerson;
 
 import example.myapp.model.RescuingPerson;
 import example.myapp.model.Status;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
@@ -17,12 +20,14 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 @Named
-@RequestScoped
-public class GhostFishingNetBean {
+@ViewScoped
+public class GhostFishingNetBean implements Serializable {
+
     @PersistenceContext(unitName = "GhostFishingNetProject")
     private EntityManager em;
 
@@ -44,6 +49,13 @@ public class GhostFishingNetBean {
     private Long selectedGfnId;
     private GhostFishingNet selectedGfn;
 
+    private GhostFishingNet ghostFishingNet;
+
+    //@PostConstruct
+    //public void init() {
+    //    ghostFishingNet = new GhostFishingNet();
+        // Weitere Initialisierungen hier...
+   // }
 
     public void loadSelectedReportingPerson() {
         System.out.println("loadSelectedReportingPerson selectedReportingPersonId: " + selectedReportingPersonId);
@@ -126,7 +138,6 @@ public class GhostFishingNetBean {
         } else {
             System.out.println("GhostFishingNet and selectedReportingPersonId is null.");
         }
-
     }
 
     public void loadSelectedGfn() {
@@ -134,8 +145,9 @@ public class GhostFishingNetBean {
         if (selectedGfnId != null) {
             selectedGfn = getGhostFishingNetByID(selectedGfnId);
             // Verwende reportingPerson oder führe weitere Aktionen durch
-            System.out.println("loadSelectedGfn selectedGfn: " + selectedGfn.getId());
+            System.out.println("loadSelectedGfn selectedGfnId: " + selectedGfn.getId());
             System.out.println("loadSelectedGfn selectedGfn: " + selectedGfn);
+            System.out.println("loadSelectedGfn selectedGfn: " + selectedGfn.getStatus());
         } else {
             GhostFishingNet gfn = new GhostFishingNet();
             gfn.setId(selectedGfnId);
@@ -152,12 +164,13 @@ public class GhostFishingNetBean {
         }
     }
 
-    public void saveGhostFishingNetAsLost(GhostFishingNet gfn) {
+    public void saveGhostFishingNetAsLost() {
         System.out.println("saveGhostFishingNetAsLost method called!");
         loadSelectedGfn();
         GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
 
         System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
+        System.out.println("saveRescuingPerson currentGfn Status: " + currentGfn.getStatus());
 
         if (currentGfn != null) {
             // Protokolliere die eingegebenen Daten
@@ -169,21 +182,22 @@ public class GhostFishingNetBean {
             status.setGfnStatusLost(true);
             statusService.merge(status);
 
+            ghostFishingNetService.merge(currentGfn);
+            System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
+
+
             System.out.println("Status 1" + status.getGfnStatusRescuePending());
             System.out.println("Status 1" + status.getGfnStatusRescued());
             System.out.println("Status 1" + status.getGfnStatusLost());
             System.out.println("Status 1" + status.getGfnStatusReported());
             System.out.println("Status 1" + status.getGfnStatusRescued());
 
-            ghostFishingNetService.merge(currentGfn);
-            System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
-
         } else {
             System.out.println("GhostFishingNet or selectedRescuingPersonId is null.");
         }
     }
 
-    public void saveGhostFishingNetAsRescued(GhostFishingNet gfn) {
+    public void saveGhostFishingNetAsRescued() {
         System.out.println("saveGhostFishingNetAsRescued method called!");
         loadSelectedGfn();
         GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
@@ -254,5 +268,13 @@ public class GhostFishingNetBean {
 
     public void setSelectedGfn(GhostFishingNet selectedGfn) {
         this.selectedGfn = selectedGfn;
+    }
+
+    public GhostFishingNet getGhostFishingNet() {
+        return ghostFishingNet;
+    }
+
+    public void setGhostFishingNet(GhostFishingNet ghostFishingNet) {
+        this.ghostFishingNet = ghostFishingNet;
     }
 }
