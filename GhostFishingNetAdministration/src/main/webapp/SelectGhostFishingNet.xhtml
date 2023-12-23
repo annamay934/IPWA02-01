@@ -6,33 +6,21 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-    <title>Report A GhostFishingNet As Rescued</title>
+    <title>Report A GhostFishingNet</title>
     <link rel="stylesheet" type="text/css" href="style/styles.css" />
 </h:head>
 
 <h:body>
-    <ui:include src="ShowDataFromTableGhostFishingNets.xhtml" />
-
-    <h:form>
-        <h:panelGrid columns="4">
-            <h:commandButton action="#{navigationBean.goToPageReportAGhostFishingNetAsRescued()}" value="Report A Ghost Fishing Net As Successfully Rescued" styleClass="custom-button">
-            </h:commandButton>
-        </h:panelGrid>
-    </h:form>
-
     <h:form>
         <h:panelGrid columns="2">
             <div class="card">
-                <h3>Choose Ghost Fishing Net You Want To Report Successfully Rescued</h3>
-                <h5>Ghost Fishing Net</h5>
-                <p:selectOneMenu id="gfn2" value="#{ghostFishingNetBean.selectedGfnId}">
+                <p:selectOneMenu id="gfn1" value="#{ghostFishingNetBean.selectedGfnId}">
                     <f:selectItem itemLabel="Select Ghost Fishing Net" itemValue="#{null}" />
                     <f:selectItems value="#{ghostFishingNetBean.getAllGhostFishingNets()}" var="gfn"
                                    itemLabel="#{gfn.id} " itemValue="#{gfn.id}" />
                     <p:ajax listener="#{ghostFishingNetBean.loadSelectedGfn}" />
                 </p:selectOneMenu>
-                <h:outputLabel for="gfn2" value="" />
-                <h:commandButton action="#{ghostFishingNetBean.saveGhostFishingNetAsRescued(ghostFishingNet)}" value="submit" styleClass="custom-button"/>
+                <h:outputLabel for="gfn1" value="" />
             </div>
         </h:panelGrid>
     </h:form>

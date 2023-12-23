@@ -21,4 +21,15 @@ public class RescuingPersonService {
             throw new IllegalStateException("EntityManager is not properly initialized.");
         }
     }
+
+    public void merge(RescuingPerson res){
+        if (em != null) {
+            System.out.println("EntityManager is properly initialized.");
+
+            em.merge(res);
+        } else {
+            throw new IllegalStateException("EntityManager is not properly initialized.");
+        }
+    }
+
 }

@@ -2,6 +2,8 @@ package example.myapp.model;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,6 +11,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @RequestScoped
 @Named
@@ -16,46 +21,21 @@ import java.io.Serializable;
 @Entity
 @DiscriminatorValue("RES")
 public class RescuingPerson extends NaturalPerson {
+    @OneToMany(mappedBy = "rescuingPerson", fetch = FetchType.EAGER,  cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<GhostFishingNet> rescuingGfnList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "rescuingPerson", cascade = CascadeType.MERGE)
-    private GhostFishingNet rescuingGfn;
-    private String userName;
-    private String password;
 
-    public void rescue(GhostFishingNet rescuedNet) {
-        this.rescuingGfn= rescuedNet;
+    public void addGhostFishingNet(GhostFishingNet reportedNet) {
+        this.rescuingGfnList.add(reportedNet);
+        reportedNet.setRescuingPerson(this);
     }
 
-    public GhostFishingNet getRescuingGfn() {
-        return rescuingGfn;
+    public void removeGhostFishingNet(GhostFishingNet reportedNet) {
+        this.rescuingGfnList.remove(reportedNet);
+        reportedNet.setRescuingPerson(null);
     }
 
-    public void setRescuingGfn(GhostFishingNet rescuingGfn) {
-        this.rescuingGfn = rescuingGfn;
+    public List<GhostFishingNet> getRescuingGfnList() {
+        return rescuingGfnList;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    public boolean checkPassword(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
-    }
-
 }

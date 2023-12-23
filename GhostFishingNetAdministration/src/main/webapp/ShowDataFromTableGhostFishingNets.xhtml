@@ -10,20 +10,20 @@
 <h:body>
 
     <h:form>
-        <h:panelGrid columns="10">
+        <h:panelGrid columns="20">
             <div>
                 <p:dataTable var="gfn" value="#{ghostFishingNetBean.getAllGhostFishingNets()}" lazy="false">
 
-                    <p:column headerText="GFN id">
+                    <p:column headerText="Ghost Fishing Net ID">
                         <h:outputText value="#{gfn.getId()}" />
                     </p:column>
 
-                    <p:column headerText="REP First Name">
-                        <h:outputText value="#{gfn.getReportingPerson().getFirstName()}" />
+                    <p:column headerText="Rescuing Person First Name">
+                        <h:outputText value="#{gfn.getRescuingPerson().getFirstName()}" />
                     </p:column>
 
-                    <p:column headerText="REP Last Name">
-                        <h:outputText value="#{gfn.getReportingPerson().getLastName()}" />
+                    <p:column headerText="Rescuing Person Last Name">
+                        <h:outputText value="#{gfn.getRescuingPerson().getLastName()}" />
                     </p:column>
 
                     <p:column headerText="Status Reported">
@@ -42,23 +42,23 @@
                         <h:outputText value="#{gfn.getStatus().getGfnStatusLost()}" />
                     </p:column>
 
-                    <p:column headerText="GfnLocationLatitude">
+                    <p:column headerText="Location Latitude">
                     <h:outputText value="#{gfn.getGfnLocationLatitude()}" />
                     </p:column>
 
-                    <p:column headerText="GfnLocationLongitude">
+                    <p:column headerText="Location Longitude">
                         <h:outputText value="#{gfn.getGfnLocationLongitude()}" />
                     </p:column>
 
-                    <p:column headerText="getGfnEstimatedSize">
+                    <p:column headerText="Estimated Size">
                         <h:outputText value="#{gfn.getGfnEstimatedSize()}" />
                     </p:column>
 
-                    <p:column headerText="gfn.getGfnReportDate">
+                    <p:column headerText="Report Date">
                         <h:outputText value="#{gfn.getGfnReportDate()}" />
                     </p:column>
 
-                    <p:column headerText="gfn.getGfnRescueDate">
+                    <p:column headerText="Rescue Date">
                         <h:outputText value="#{gfn.getGfnRescueDate()}" />
                     </p:column>
                 </p:dataTable>

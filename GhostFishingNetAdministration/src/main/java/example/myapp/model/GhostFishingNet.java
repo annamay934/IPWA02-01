@@ -1,18 +1,11 @@
 package example.myapp.model;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
-import example.myapp.beans.ReportingPersonBean;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @RequestScoped
 @Named
@@ -38,8 +31,8 @@ public class GhostFishingNet {
     @JoinColumn(name = "STATUS_ID")
     private Status status;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "RESCUINGPERSON_ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "RESCUINGPERSON_ID")
     private RescuingPerson rescuingPerson;
 
     @ManyToOne(fetch = FetchType.EAGER)

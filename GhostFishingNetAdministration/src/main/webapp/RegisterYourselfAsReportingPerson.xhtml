@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-    <title>Register Yourself As Rescuing Person</title>
+    <title>Register Yourself As Reporting Person</title>
     <link rel="stylesheet" type="text/css" href="style/styles.css" />
     <h:form>
         <h:commandButton value="Go Back" action="#{naturalPersonBean.goBack()}" styleClass="custom-button"/>
@@ -15,30 +15,29 @@
 
 <h:body>
     <p:growl id="growl" life="3000" showDetail="true"/>
-
     <p:separator />
 
     <h:form>
-        <h3>Register Yourself As Rescuing Person</h3>
+        <h3>Register Yourself As Reporting Person</h3>
         <h4>Input Your Data</h4>
             <div class="card">
-                <h:panelGrid columns="2" >
-                <p:outputLabel for="firstname" value="Firstname: "/>
-                <p:inputText id="firstname" value="#{rescuingPerson.firstName}" required="true"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="firstname" value="Firstname: "/>
+                    <p:inputText id="firstname" value="#{reportingPerson.firstName}" required="true"/>
                 </h:panelGrid>
             </div>
 
-        <div class="card">
-            <h:panelGrid columns="2" >
-                <p:outputLabel for="lastname" value="Lastname: "/>
-                <p:inputText id="lastname" value="#{rescuingPerson.lastName}" required="true"/>
+            <div class="card">
+            <h:panelGrid columns="2">
+                    <p:outputLabel for="lastname" value="Lastname: "/>
+                    <p:inputText id="lastname" value="#{reportingPerson.lastName}" required="true"/>
             </h:panelGrid>
-        </div>
+            </div>
 
         <div class="card">
-            <h:panelGrid columns="2" >
-                <p:outputLabel for="phonenumber" value="Phonenumber: "/>
-                <p:inputText id="phonenumber" value="#{rescuingPerson.phoneNumber}" required="true"/>
+            <h:panelGrid columns="2">
+               <p:outputLabel for="phonenumber" value="Phonenumber: "/>
+                <p:inputText id="phonenumber" value="#{reportingPerson.phoneNumber}" />
             </h:panelGrid>
         </div>
 
@@ -60,9 +59,10 @@
             </h:panelGrid>
         </div>
         <div class="card">
-        <h:commandButton action="#{naturalPersonBean.saveRescuingPerson(rescuingPerson)}"
-                         value="Submit" styleClass="custom-button" update="growl, username, password, firstname, lastname, phonenumber"/>
+            <h:commandButton action="#{naturalPersonBean.saveReportingPerson(reportingPerson)}" value="Submit"
+                             styleClass="custom-button" update="growl, username, password, firstname, lastname, phonenumber"/>
         </div>
+
     </h:form>
 
 </h:body>

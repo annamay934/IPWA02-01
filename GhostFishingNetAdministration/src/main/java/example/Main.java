@@ -54,8 +54,6 @@ public class Main {
             Status status2 = new Status();
             status2.setGfnStatusRescued(true);
 
-            res.setRescuingGfn(g2);
-
             GhostFishingNet g3 = new GhostFishingNet();
             g3.setGfnLocationLatitude(34.567);
             g3.setGfnLocationLongitude(132.789);
