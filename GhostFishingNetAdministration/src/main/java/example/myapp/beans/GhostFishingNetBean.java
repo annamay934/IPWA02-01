@@ -78,17 +78,12 @@ public class GhostFishingNetBean implements Serializable {
 
     public void saveGhostFishingNet(GhostFishingNet gfn) {
         System.out.println("Save GhostFishingNet method called!");
-        //loadSelectedReportingPerson();
-        //ReportingPerson currentReportingPerson = selectedReportingPerson; // Lokale Variable erstellen und Wert zuweisen
         ReportingPerson currentReportingPerson = naturalPersonBean.getLoggedInReportingPerson();
 
         System.out.println("saveGhostFishingNet currentReportingPerson: " + currentReportingPerson);
         System.out.println("saveGhostFishingNet currentReportingPerson: " + currentReportingPerson);
-        //System.out.println("saveGhostFishingNet selectedReportingPerson: " + selectedReportingPerson);
-
 
         if (gfn != null && currentReportingPerson != null) {
-            // Protokolliere die eingegebenen Daten
             System.out.println("Selected Reporting Person Details:");
             System.out.println("ID: " + currentReportingPerson.getId());
             System.out.println("First Name: " + currentReportingPerson.getFirstName());
@@ -125,7 +120,8 @@ public class GhostFishingNetBean implements Serializable {
             System.out.println("Id: " + gfn.getId());
             System.out.println("Id: " + gfn.getStatus());
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success.", "Ghost fishing net reported."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Success.", "Ghost fishing net reported."));
 
         } else if (gfn != null){
             System.out.println("SelectedReportingPersonId is null."); // Falls das Objekt null ist
@@ -148,10 +144,9 @@ public class GhostFishingNetBean implements Serializable {
             System.out.println("Id: " + gfn.getId());
         } else {
             System.out.println("GhostFishingNet and selectedReportingPersonId is null.");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error.", "Something went wrong."));
         }
-        //this.selectedReportingPersonId = null;
-
         gfn.setGfnEstimatedSizeWidth(0);
         gfn.setGfnEstimatedSizeLength(0);
         gfn.setGfnEstimatedSize(0);
@@ -160,34 +155,27 @@ public class GhostFishingNetBean implements Serializable {
         gfn.setGfnReportDate(null);
     }
 
-    public void loadSelectedGfn() {
+    public boolean loadSelectedGfn() {
         System.out.println("loadSelectedGfn selectedGfnId: " + selectedGfnId);
         if (selectedGfnId != null) {
             selectedGfn = getGhostFishingNetByID(selectedGfnId);
-            // Verwende reportingPerson oder führe weitere Aktionen durch
             System.out.println("loadSelectedGfn selectedGfnId: " + selectedGfn.getId());
             System.out.println("loadSelectedGfn selectedGfn: " + selectedGfn);
-            System.out.println("loadSelectedGfn selectedGfn: " + selectedGfn.getStatus());
+            System.out.println("loadSelectedGfn selectedGfn getStatus: " + selectedGfn.getStatus());
+            return true;
         } else {
-            GhostFishingNet gfn = new GhostFishingNet();
-            gfn.setId(selectedGfnId);
-            gfn.setGfnLocationLatitude(25.678);
-            gfn.setGfnLocationLongitude(124.456);
-            gfn.calculatedGfnEstimatedSize(3,1);
-            Status status1 = new Status();
-            status1.setGfnStatusReported(true);
-            gfn.setStatus(status1);
-
-            ghostFishingNetService.persist(gfn);
-
-            selectedGfn = gfn;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "Please choose a ghost fishing net."));
+            return false;
         }
     }
 
     public void saveGhostFishingNetAsLost() {
         System.out.println("saveGhostFishingNetAsLost method called!");
-        loadSelectedGfn();
-        GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
+        if (!loadSelectedGfn()) {
+            return;
+        }
+        GhostFishingNet currentGfn = selectedGfn;
 
         NaturalPerson currentNaturalPerson = naturalPersonBean.getLoggedInPerson();
 
@@ -195,14 +183,13 @@ public class GhostFishingNetBean implements Serializable {
         System.out.println("saveRescuingPerson currentGfn Status: " + currentGfn.getStatus());
 
         if (currentGfn != null && currentNaturalPerson != null) {
-
             if (currentNaturalPerson instanceof ReportingPerson && ((ReportingPerson) currentNaturalPerson).getPhoneNumber() == null) {
                 System.out.println("Anonymous reporting persons can´t report a ghost fishing net as lost");
                 this.selectedGfnId = null;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Denied.", "You must provide your telephone number to do this."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Denied.", "You must provide your telephone number to do this."));
                 return;
             }
-
             System.out.println("Selected Rescuing Person Details:");
             System.out.println("ID: " + currentGfn.getId());
             System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
@@ -220,54 +207,58 @@ public class GhostFishingNetBean implements Serializable {
             System.out.println("Status 1" + status.getGfnStatusReported());
             System.out.println("Status 1" + status.getGfnStatusRescued());
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success.", "Ghost fishing net reported as lost."));
-
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Success.", "Ghost fishing net reported as lost."));
         } else {
-            System.out.println("GhostFishingNet or selectedRescuingPersonId is null.");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error.", "Something went wrong."));
         }
         this.selectedGfnId = null;
     }
 
     public void saveGhostFishingNetAsRescued() {
         System.out.println("saveGhostFishingNetAsRescued method called!");
-        loadSelectedGfn();
-        GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
+        if (!loadSelectedGfn()) {
+            return;
+        }
+        GhostFishingNet currentGfn = selectedGfn;
         RescuingPerson currentRescuingPerson = naturalPersonBean.getLoggedInRescuingPerson();
 
         System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
         System.out.println("naturalPersonBean.getLoggedInRescuingPerson(): " + naturalPersonBean.getLoggedInRescuingPerson());
         if (currentGfn != null && currentRescuingPerson != null) {
-            // Protokolliere die eingegebenen Daten
             System.out.println("Selected Rescuing Person Details:");
             System.out.println("ID: " + currentGfn.getId());
             System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
 
-            currentGfn.setRescuingPerson(currentRescuingPerson);
-            currentRescuingPerson.addGhostFishingNet(currentGfn);
-            rescuingPersonService.merge(currentRescuingPerson);
-            ghostFishingNetService.merge(currentGfn);
-
             Status status = currentGfn.getStatus();
-            status.setGfnStatusRescued(true);
-            statusService.merge(status);
+            if (status != null && status.getGfnStatusRescuePending() != null) {
+                currentGfn.setRescuingPerson(currentRescuingPerson);
+                currentRescuingPerson.addGhostFishingNet(currentGfn);
+                status.setGfnStatusRescued(true);
+                statusService.merge(status);
+                rescuingPersonService.merge(currentRescuingPerson);
+                currentGfn.setGfnRescueDate(gfnRescueDate);
+                ghostFishingNetService.merge(currentGfn);
 
-            currentGfn.setGfnRescueDate(gfnRescueDate);
+                System.out.println("Status 1" + status.getGfnStatusRescuePending());
+                System.out.println("Status 1" + status.getGfnStatusRescued());
+                System.out.println("Status 1" + status.getGfnStatusLost());
+                System.out.println("Status 1" + status.getGfnStatusReported());
+                System.out.println("Status 1" + status.getGfnStatusRescued());
 
-            System.out.println("Status 1" + status.getGfnStatusRescuePending());
-            System.out.println("Status 1" + status.getGfnStatusRescued());
-            System.out.println("Status 1" + status.getGfnStatusLost());
-            System.out.println("Status 1" + status.getGfnStatusReported());
-            System.out.println("Status 1" + status.getGfnStatusRescued());
+                System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
 
-            ghostFishingNetService.merge(currentGfn);
-            System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success.", "Ghost fishing net reported as rescued."));
-
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Success.", "Ghost fishing net reported as rescued."));
+            } else {
+                // show message if status is not rescuepending
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error.", "The ghost fishing net must be marked as 'Rescue Pending' before it can be rescued."));
+            }
         } else {
-            System.out.println("GhostFishingNet or selectedRescuingPersonId is null.");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error.", "Something went wrong."));
         }
         this.selectedGfnId = null;
         gfnRescueDate = null;
@@ -275,15 +266,16 @@ public class GhostFishingNetBean implements Serializable {
 
     public void saveGhostFishingNetAsRescuePending() {
         System.out.println("saveGhostFishingNetAsRescued method called!");
-        loadSelectedGfn();
-        GhostFishingNet currentGfn = selectedGfn; // Lokale Variable erstellen und Wert zuweisen
+        if (!loadSelectedGfn()) {
+            return;
+        }
+        GhostFishingNet currentGfn = selectedGfn;
         RescuingPerson currentRescuingPerson = naturalPersonBean.getLoggedInRescuingPerson();
 
         System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
         System.out.println("naturalPersonBean.getLoggedInRescuingPerson(): " + naturalPersonBean.getLoggedInRescuingPerson());
 
         if (currentGfn != null && currentRescuingPerson != null) {
-            // Protokolliere die eingegebenen Daten
             System.out.println("Selected Rescuing Person Details:");
             System.out.println("ID: " + currentGfn.getId());
             System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
@@ -303,10 +295,11 @@ public class GhostFishingNetBean implements Serializable {
             System.out.println("Status 1" + status.getGfnStatusReported());
             System.out.println("Status 1" + status.getGfnStatusRescued());
             System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success.", "Ghost fishing net reported rescuepending."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Success.", "Ghost fishing net reported rescuepending."));
         } else {
-            System.out.println("GhostFishingNet or selectedRescuingPersonId is null.");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error.", "Something went wrong."));
         }
         this.selectedGfnId = null;
     }

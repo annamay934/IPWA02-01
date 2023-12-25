@@ -11,7 +11,7 @@
         <class>example.myapp.model.ReportingPerson</class>
         <class>example.myapp.model.GhostFishingNet</class>
         <class>example.myapp.model.Status</class>
-        <class>example.myapp.model.NavigationBean</class>
+        <class>example.myapp.beans.NavigationBean</class>
         <properties>
 
             <!-- Hibernate-spezifische Einstellungen -->

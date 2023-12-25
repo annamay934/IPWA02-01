@@ -9,7 +9,6 @@ import java.util.Date;
 
 @RequestScoped
 @Named
-
 @Entity
 public class GhostFishingNet {
 

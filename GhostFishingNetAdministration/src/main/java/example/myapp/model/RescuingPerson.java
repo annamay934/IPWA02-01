@@ -21,7 +21,8 @@ import java.util.regex.Pattern;
 @Entity
 @DiscriminatorValue("RES")
 public class RescuingPerson extends NaturalPerson {
-    @OneToMany(mappedBy = "rescuingPerson", fetch = FetchType.EAGER,  cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "rescuingPerson", fetch = FetchType.EAGER,
+            cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<GhostFishingNet> rescuingGfnList = new ArrayList<>();
 
 
