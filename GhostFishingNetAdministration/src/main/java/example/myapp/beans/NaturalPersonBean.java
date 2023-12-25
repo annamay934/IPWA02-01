@@ -38,8 +38,8 @@ public class NaturalPersonBean implements Serializable {
     //@Inject
     //private StatusService statusService;
 
-   //@Inject
-   //private GhostFishingNetService ghostFishingNetService;
+    //@Inject
+    //private GhostFishingNetService ghostFishingNetService;
 
     //@Inject
     //private GhostFishingNetBean ghostFishingNetBean;
@@ -75,10 +75,12 @@ public class NaturalPersonBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         if (isUsernameAvailable(userName)) {
             System.out.println("Username available");
-            context.addMessage("username", new FacesMessage(FacesMessage.SEVERITY_INFO, "Username available", null));
+            context.addMessage("username", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Username available", null));
         } else {
             System.out.println("Username not available");
-            context.addMessage("username", new FacesMessage(FacesMessage.SEVERITY_WARN, "Username not available. Please choose something else.", null));
+            context.addMessage("username", new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Username not available. Please choose something else.", null));
         }
     }
 
@@ -95,11 +97,14 @@ public class NaturalPersonBean implements Serializable {
         System.out.println("Checking password for: " + password);
         FacesContext context = FacesContext.getCurrentInstance();
         if (isValidPassword(password)) {
-            // Gültiges Passwort
-            context.addMessage("password", new FacesMessage(FacesMessage.SEVERITY_INFO, "Valid password", null));
+            // valid password
+            context.addMessage("password", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Valid password", null));
         } else {
-            // Ungültiges Passwort
-            context.addMessage("password", new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid password. It must contain numbers, both lowercase and uppercase letters, and be at least 8 characters long.", null));
+            // invalid password
+            context.addMessage("password", new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Invalid password. It must contain numbers, both lowercase and uppercase letters, " +
+                            "and be at least 8 characters long.", null));
         }
     }
 
@@ -176,7 +181,7 @@ public class NaturalPersonBean implements Serializable {
         }
 
         // Falls Login fehlschlägt
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Denied", "Wrong Input. Please keep attention to info boxes."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Denied", "Wrong Input."));
         System.out.println("Login fehlgeschlagen");
 
         userName = "";
@@ -185,10 +190,10 @@ public class NaturalPersonBean implements Serializable {
     }
 
     public String logout() {
-        // Benutzerspezifische Logout-Logik, z.B. Session-Daten löschen
+        // delete session data - customer specific logic
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-        // Weiterleitung zur Startseite (index.xhtml)
+        // routing to index.xhtml
         return "/index.xhtml?faces-redirect=true";
     }
 
@@ -203,126 +208,86 @@ public class NaturalPersonBean implements Serializable {
     public void saveRescuingPerson(RescuingPerson res) {
         System.out.println("Save RescuingPerson method called!");
         System.out.println("RescuingPersonBean userName: " + userName);
-        //ghostFishingNetBean.loadSelectedGfn();
+
+        if (!isValidPassword(password)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Invalid password."));
+            return; // Beenden der Methode, wenn das Passwort ungültig ist
+        }
+
         res.setPassword(res.hashPassword(password));
         res.setUserName(userName);
 
-        //GhostFishingNet currentGfn = ghostFishingNetBean.getSelectedGfn(); // Lokale Variable erstellen und Wert zuweisen
-        //System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
-
-        if (res != null) {
-            // Protokolliere die eingegebenen Daten
-            System.out.println("Selected Rescuing Person Details:");
-            //System.out.println("ID: " + currentGfn.getId());
-            //System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
+        if (res != null && isUsernameAvailable(res.getUserName())) {
+            System.out.println("Rescuing Person Details:");
 
             rescuingPersonService.persist(res);
 
-            //Status status = currentGfn.getStatus();
-            //status.setGfnStatusRescuePending(true);
-            //statusService.merge(status);
-
-            //System.out.println("Status 1" + status.getGfnStatusRescuePending());
-            //System.out.println("Status 1" + status.getGfnStatusRescued());
-            //System.out.println("Status 1" + status.getGfnStatusLost());
-            //System.out.println("Status 1" + status.getGfnStatusReported());
-            //System.out.println("Status 1" + status.getGfnStatusRescued());
-
-            //res.addGhostFishingNet(currentGfn);
-            //currentGfn.setRescuingPerson(res);
-            //ghostFishingNetService.merge(currentGfn);
-
-            //System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
             System.out.println("First Name: " + res.getFirstName());
             System.out.println("Last Name: " + res.getLastName());
             System.out.println("Phone Number: " + res.getPhoneNumber());
             System.out.println("Username: " + res.getUserName());
-            System.out.println("Password: " + res.getPassword());
             System.out.println("RescuingGfn: " + res.getRescuingGfnList());
             System.out.println("Id: " + res.getId());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Registration done!"));
-
             //return "index.xhtml?faces-redirect=true";
         } else {
-            System.out.println("GhostFishingNet or selectedRescuingPersonId is null."); // Falls das Objekt null ist
-
             System.out.println("First Name: " + res.getFirstName());
             System.out.println("Last Name: " + res.getLastName());
             System.out.println("Phone Number: " + res.getPhoneNumber());
             System.out.println("Username: " + res.getUserName());
-            System.out.println("Password: " + res.getPassword());
             System.out.println("RescuingGfn: " + res.getRescuingGfnList());
             System.out.println("Rescue Date: " + res.getPhoneNumber());
             System.out.println("Id: " + res.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Username wrong."));
         }
         res.setFirstName("");
         res.setLastName("");
         res.setPhoneNumber("");
         userName = "";
         password = "";
-
         //return null;
     }
 
     public void saveReportingPerson(ReportingPerson rep) {
         System.out.println("Save RescuingPerson method called!");
         System.out.println("RescuingPersonBean userName: " + userName);
-        //ghostFishingNetBean.loadSelectedGfn();
+
+        if (!isValidPassword(password)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Invalid password."));
+            return; // Beenden der Methode, wenn das Passwort ungültig ist
+        }
+
         rep.setPassword(rep.hashPassword(password));
         rep.setUserName(userName);
 
-        //GhostFishingNet currentGfn = ghostFishingNetBean.getSelectedGfn(); // Lokale Variable erstellen und Wert zuweisen
-        //System.out.println("saveRescuingPerson currentGfn: " + currentGfn);
+        if (rep != null && isUsernameAvailable(rep.getUserName())) {
+            System.out.println("Reporting Person Details:");
 
-        //if (rep != null && currentGfn != null) {
-        if (rep != null) {
-            // Protokolliere die eingegebenen Daten
-            System.out.println("Selected Rescuing Person Details:");
-            //System.out.println("ID: " + currentGfn.getId());
-            //System.out.println("currentGfn.getStatus(): " + currentGfn.getStatus());
-
-            //Status status = currentGfn.getStatus();
-            //status.setGfnStatusReported(true);
-            //statusService.merge(status);
-
-            //System.out.println("Status 1" + status.getGfnStatusRescuePending());
-            //System.out.println("Status 1" + status.getGfnStatusRescued());
-            //System.out.println("Status 1" + status.getGfnStatusLost());
-            //System.out.println("Status 1" + status.getGfnStatusReported());
-            //System.out.println("Status 1" + status.getGfnStatusRescued());
-
-            //rep.addGhostFishingNet(currentGfn);
             reportingPersonService.persist(rep);
 
-            //currentGfn.setReportingPerson(rep);
-            //ghostFishingNetService.merge(currentGfn);
-
-            //System.out.println("CurrentGfn Status1: " + currentGfn.getStatus());
             System.out.println("First Name: " + rep.getFirstName());
             System.out.println("Last Name: " + rep.getLastName());
             System.out.println("Phone Number: " + rep.getPhoneNumber());
             System.out.println("Username: " + rep.getUserName());
-            System.out.println("Password: " + rep.getPassword());
             System.out.println("RescuingGfn: " + rep.getReportingGfnList());
             System.out.println("Id: " + rep.getId());
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Registration done!"));
-
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Success", "Registration done!"));
             //return "index.xhtml?faces-redirect=true";
         } else {
-            System.out.println("GhostFishingNet or selectedRescuingPersonId is null."); // Falls das Objekt null ist
-
             System.out.println("First Name: " + rep.getFirstName());
             System.out.println("Last Name: " + rep.getLastName());
             System.out.println("Phone Number: " + rep.getPhoneNumber());
             System.out.println("Username: " + rep.getUserName());
-            System.out.println("Password: " + rep.getPassword());
             System.out.println("RescuingGfn: " + rep.getReportingGfnList());
             System.out.println("Rescue Date: " + rep.getPhoneNumber());
             System.out.println("Id: " + rep.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", "Something went wrong."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error.", "Username wrong."));
         }
         rep.setFirstName("");
         rep.setLastName("");
