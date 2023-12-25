@@ -1,4 +1,4 @@
-package example.myapp.model;
+package example.myapp.beans;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
@@ -18,13 +18,6 @@ public class NavigationBean {
 
     public String goToPageRegisterYourselfAsReportingPerson() {
         return "RegisterYourselfAsReportingPerson.xhtml";
-    }
-
-    public String goToPageReportingPersonHome() {
-        return "ReportingPersonHome.xhtml";
-    }
-    public String goToPageRescuingPersonHome() {
-        return "RescuingPersonHome.xhtml";
     }
 
 }
