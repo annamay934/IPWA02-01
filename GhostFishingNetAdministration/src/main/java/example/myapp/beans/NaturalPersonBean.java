@@ -86,7 +86,7 @@ public class NaturalPersonBean implements Serializable {
     }
 
     public void checkPassword(){
-        System.out.println("Checking password for: " + password);
+        System.out.println("Password gets checked on every key stroke");
         FacesContext context = FacesContext.getCurrentInstance();
         if (isValidPassword(password)) {
             // valid password
