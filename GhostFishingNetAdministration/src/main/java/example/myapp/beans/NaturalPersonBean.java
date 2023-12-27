@@ -1,24 +1,16 @@
 package example.myapp.beans;
 
-import ejb.GhostFishingNetService;
-import ejb.ReportingPersonService;
-import ejb.RescuingPersonService;
-import ejb.StatusService;
+import ejb.*;
 import example.myapp.model.*;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.context.Flash;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-
 import java.io.Serializable;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @Named
@@ -67,7 +59,7 @@ public class NaturalPersonBean implements Serializable {
         Long countReporting = em.createQuery("SELECT COUNT(rp) FROM ReportingPerson rp WHERE rp.userName = :userName", Long.class)
                 .setParameter("userName", userName)
                 .getSingleResult();
-        return (countRescuing + countReporting) > 0; // true, wenn ein Benutzer mit diesem Benutzernamen existiert
+        return (countRescuing + countReporting) > 0; // true, if user with username exists
     }
 
     public void checkUsernameAvailability() {
@@ -159,12 +151,12 @@ public class NaturalPersonBean implements Serializable {
         }
     }
 
-    public String login() {
+    public String logIn() {
         System.out.println("userName: " + userName);
 
         // Überprüfen, ob es eine RescuingPerson ist
         RescuingPerson rescuingUser = findRescuingPersonByUsername(userName);
-        if (rescuingUser != null && rescuingUser.checkPassword(password, rescuingUser.getPassword())) {
+        if (rescuingUser != null && rescuingUser.checkPasswordLogIn(password, rescuingUser.getPassword())) {
             System.out.println("Erfolgreicher RescuingPerson-Login");
             loggedInRescuingPerson = rescuingUser;
             // Logik für RescuingPerson
@@ -173,7 +165,7 @@ public class NaturalPersonBean implements Serializable {
 
         // Überprüfen, ob es eine ReportingPerson ist
         ReportingPerson reportingUser = findReportingPersonByUsername(userName);
-        if (reportingUser != null && reportingUser.checkPassword(password, reportingUser.getPassword())) {
+        if (reportingUser != null && reportingUser.checkPasswordLogIn(password, reportingUser.getPassword())) {
             System.out.println("Erfolgreicher ReportingPerson-Login");
             loggedInReportingPerson = reportingUser;
             // Logik für ReportingPerson
@@ -181,7 +173,8 @@ public class NaturalPersonBean implements Serializable {
         }
 
         // Falls Login fehlschlägt
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Denied", "Wrong Input."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "Denied", "Wrong Input."));
         System.out.println("Login fehlgeschlagen");
 
         userName = "";

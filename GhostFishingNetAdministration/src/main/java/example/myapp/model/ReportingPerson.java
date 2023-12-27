@@ -23,11 +23,6 @@ public class ReportingPerson extends NaturalPerson {
         reportedNet.setReportingPerson(this);
     }
 
-    public void removeGhostFishingNet(GhostFishingNet reportedNet) {
-        this.reportingGfnList.remove(reportedNet);
-        reportedNet.setReportingPerson(null);
-    }
-
     public List<GhostFishingNet> getReportingGfnList() {
         return reportingGfnList;
     }

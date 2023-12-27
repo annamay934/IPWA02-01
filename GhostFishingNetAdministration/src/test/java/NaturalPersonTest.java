@@ -22,7 +22,7 @@ public class NaturalPersonTest {
         String rawPassword = "TestPassword123";
         String hashedPassword = person.hashPassword(rawPassword);
 
-        assertTrue(person.checkPassword(rawPassword, hashedPassword));
-        assertFalse(person.checkPassword("WrongPassword", hashedPassword));
+        assertTrue(person.checkPasswordLogIn(rawPassword, hashedPassword));
+        assertFalse(person.checkPasswordLogIn("WrongPassword", hashedPassword));
     }
 }

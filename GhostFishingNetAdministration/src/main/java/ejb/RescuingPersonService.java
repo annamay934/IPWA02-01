@@ -3,7 +3,6 @@ package ejb;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import example.myapp.model.ReportingPerson;
 import example.myapp.model.RescuingPerson;
 import jakarta.ejb.Stateless;
 

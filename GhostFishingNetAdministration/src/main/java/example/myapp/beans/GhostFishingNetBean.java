@@ -5,28 +5,21 @@ import ejb.ReportingPersonService;
 import ejb.RescuingPersonService;
 import ejb.StatusService;
 import example.myapp.model.*;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Named
 @SessionScoped
+
 public class GhostFishingNetBean implements Serializable {
 
     @PersistenceContext(unitName = "GhostFishingNetProject")

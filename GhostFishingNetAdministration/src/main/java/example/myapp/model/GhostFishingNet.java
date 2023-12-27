@@ -117,13 +117,6 @@ public class GhostFishingNet {
         return reportingPerson;
     }
 
-    public void addReportingPerson(ReportingPerson reportingPerson) {
-        if (reportingPerson != null) {
-            this.reportingPerson = reportingPerson;
-            reportingPerson.addGhostFishingNet(this);
-        }
-    }
-
     public void setRescuingPerson(RescuingPerson rescuingPerson) {
         this.rescuingPerson = rescuingPerson;
     }

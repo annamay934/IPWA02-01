@@ -1,8 +1,6 @@
 package ejb;
 
-import example.myapp.beans.GhostFishingNetBean;
 import example.myapp.model.GhostFishingNet;
-import example.myapp.model.ReportingPerson;
 import jakarta.ejb.Stateless;
 
 import jakarta.persistence.EntityManager;
